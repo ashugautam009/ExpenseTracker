@@ -40,11 +40,18 @@ function App() {
       category:category,
     }
     console.log('payload',payload)
-
-    Setdata([...data,payload])
+    if(amount>0 && title.length>0 && date && category){
+      Setdata([...data,payload])
+      alert('User Informatoin Added')
+    }
+    else{
+      alert(' Invalid Data Pleasec correct it ')
+    }
     SetTitle('')
     SetAmount('');
     SetDate('');
+
+
   }
   return (
     <div>
@@ -75,6 +82,7 @@ function App() {
             <th>Title</th>
             <th>Amount</th>
             <th>Category</th>
+            <th>Date.</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -86,7 +94,8 @@ function App() {
                 <td>{check.title}</td>
                 <td>{check.amount}</td>
                 <td>{check.category}</td>
-                <button disabled={disabledcheck()} onClick={()=>handleDelete(check.id)}>Delete</button>
+                <td>{check.date}</td>
+                <td><button disabled={disabledcheck()} onClick={()=>handleDelete(check.id)}>Delete</button></td>
               </tr>
             )
           })}
