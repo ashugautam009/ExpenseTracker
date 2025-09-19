@@ -2,14 +2,15 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import fakedata from './data/fakedata'
-
+import {genrateRandomNo} from './assets/constants/constant'
 function App() {
   const[data,Setdata]=useState([]);//Hold the Whole data
 
 
   const[title,SetTitle]=useState('');
-  const[age,SetAge]=useState(0)
-  const[date,SettDate]=useState('');
+  const[amount,SetAmount]=useState();
+  const[date,SetDate]=useState('');
+  const[category,SetCateogry]=useState('');
   useEffect(()=>{
     Setdata(fakedata)
   },[])
@@ -22,17 +23,50 @@ function App() {
     Setdata(RemoveRecord)
 
   }
+
+  //Function don't allow delete last list item 
+  const disabledcheck=()=>{
+    const CheckLastitem=data.length==1;
+    return CheckLastitem
+  }
+
+  //Add Function 
+  const handleAdd=()=>{
+    const payload={
+      id:genrateRandomNo(),//function to create random id 
+      amount:amount,
+      date:date,
+      title:title,
+      category:category,
+    }
+    console.log('payload',payload)
+
+    Setdata([...data,payload])
+    SetTitle('')
+    SetAmount('');
+    SetDate('');
+  }
   return (
     <div>
       {/*<h2>Expense Tracker</h2>*/}
       <div>
         <label htmlFor='title'>Title</label>
-        <input id='title' type='text'/>
+        <input id='title' type='text' onChange={(e)=>SetTitle(e.target.value)} value={title}/>
         <label htmlFor='amount'>Amount</label>
-        <input id='amount' type='number' min={0}/>
+        <input id='amount' type='number' min={0} onChange={(e)=>SetAmount(e.target.value)} value={amount}/>
         <label htmlFor='date'>Date</label>
-        <input id='date' type='date'/>
-        <button>Submit</button>
+        <input id='date' type='date' onChange={(e)=>SetDate(e.target.value)} value={date}/>
+        <label htmlFor='category'>Category</label>
+        <select value={category} onChange={(e)=>SetCateogry(e.target.value)} >
+        {data.map((check)=>{
+          return(
+            <option value={check.category} key={check.id}>
+              {check.category}
+            </option>
+          )
+        })}
+        </select>
+        <button onClick={()=>handleAdd()}>Submit</button>
       </div>
       <table>
         <thead>
@@ -52,7 +86,7 @@ function App() {
                 <td>{check.title}</td>
                 <td>{check.amount}</td>
                 <td>{check.category}</td>
-                <button onClick={()=>handleDelete(check.id)}>Delete</button>
+                <button disabled={disabledcheck()} onClick={()=>handleDelete(check.id)}>Delete</button>
               </tr>
             )
           })}
