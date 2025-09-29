@@ -53,9 +53,21 @@ function App() {
 
 
   }
+
+  //Total Budget
+  const FIndTotalBudget=data.map((check)=>check.amount)
+  const AddingsumOfAmount=FIndTotalBudget.reduce((acc,curr)=>{
+    return acc+curr
+  },0)
+  
   return (
     <div>
       {/*<h2>Expense Tracker</h2>*/}
+      
+      <div>
+        <h2>Total Budget: -{AddingsumOfAmount}</h2>
+
+      </div>
       <div>
         <label htmlFor='title'>Title</label>
         <input id='title' type='text' onChange={(e)=>SetTitle(e.target.value)} value={title}/>
