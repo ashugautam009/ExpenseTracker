@@ -11,6 +11,7 @@ function App() {
   const[amount,SetAmount]=useState();
   const[date,SetDate]=useState('');
   const[category,SetCateogry]=useState('');
+  const[CaptureuserInput,SetCaptureuserInput]=useState('')
   useEffect(()=>{
     Setdata(fakedata)
   },[])
@@ -60,6 +61,25 @@ function App() {
     return acc+curr
   },0)
   
+
+  //set value which is input by user 
+  function CaptureInpuValueByuser(e){
+    SetCaptureuserInput(e.target.value)
+  }
+  //Search The data from List
+  const handlesearch=()=>{
+    if(CaptureuserInput){
+      const find=data.filter((check)=>check.title==CaptureuserInput)
+      console.log('find',find)
+      Setdata(find)
+    }
+  }
+
+  //Handle Reset
+  function handleReset(){
+    Setdata(data)
+  }
+  
   return (
     <div>
       {/*<h2>Expense Tracker</h2>*/}
@@ -86,6 +106,12 @@ function App() {
         })}
         </select>
         <button onClick={()=>handleAdd()}>Submit</button>
+      </div>
+      <div className='Search-Funcanality'>
+        <label htmlFor='search'>Search Here </label>
+        <input id='search' type='text' placeholder='Search Here for anything ' onChange={(e)=>CaptureInpuValueByuser(e)}/>
+        <button onClick={()=>handlesearch()}>Search</button>
+        <button onClick={()=>handleReset()}>Reset</button>
       </div>
       <table>
         <thead>
