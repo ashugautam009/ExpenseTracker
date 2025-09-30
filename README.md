@@ -21,7 +21,7 @@ Specific year
 Filtered results should update the list dynamically.
 
 5)Total Expense Calculation
-Show a summary of total expenses for the selected filter.
+Show a summary of total Budget(Expense-Total).
 Should auto-update when a new expense is added or deleted.
 
 6)Responsive Design
